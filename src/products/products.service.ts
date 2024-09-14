@@ -22,8 +22,8 @@ export class ProductsService {
     return this.productRepository.find();
   }
 
-   findOne(id: string) {
-    const  product  =  this.productRepository.findOneBy({productId: id});    
+   async findOne(id: string) {
+    const  product  = await this.productRepository.findOneBy({productId: id});    
 
     if (!product) throw new NotFoundException('Product not found');
 
@@ -38,25 +38,22 @@ export class ProductsService {
     // return productsFound;
   }
 
-  update(id: string, updateProductDto: UpdateProductDto) {
-    // let productToUpdate = this.findOne(id);
-    // productToUpdate = {
-    //   ...productToUpdate,
-    //   ...updateProductDto
-    // };
-    // this.products = this.products.map((product) => {
-    //   if (product.productId === id) {
-    //     product = productToUpdate;
-    //   }
-    //   return product;
-    // });
-    // return productToUpdate;
+  async update(id: string, updateProductDto: UpdateProductDto) {
+    const protductUpd = await this.productRepository.preload({
+      productId: id, 
+      ...updateProductDto
+    });
+    if (!protductUpd) throw new NotFoundException('Product not found');
+    this.productRepository.save(protductUpd);
+    return protductUpd;
   }
 
-  remove(id: string) {
-   const productDel = this.productRepository.delete(id);
+   remove(id: string) {
+   this.findOne(id); 
+   this.productRepository.delete(id);
 
-    if (!productDel) throw new NotFoundException('Product not found');
-    return productDel;
+    return {
+      message: `Producto con ${id} eliminado`,
+    };
   }
 }
