@@ -17,7 +17,7 @@ export class ProvidersController {
     return this.providersService.findAll();
   }
   @Get('/name/:name')
-  search(@Param('name') name: string) {
+  findOneByName(@Param('name') name: string) {
     return this.providersService.findOneByName(name);
   }
 
