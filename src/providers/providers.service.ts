@@ -17,18 +17,34 @@ export class ProvidersService {
   }
 
   findAll() {
-    return `This action returns all providers`;
+    return this.providerRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} provider`;
+  findOne(id: string
+  ) {
+    return this.providerRepository.findOneBy({
+      providerId: id
+    });
   }
 
-  update(id: number, updateProviderDto: UpdateProviderDto) {
-    return `This action updates a #${id} provider`;
+  findOneByName(name: string) {
+    return this.providerRepository.findOneBy({
+      providerName: name
+    }
+  )};
+
+  async update(id: string, updateProviderDto: UpdateProviderDto) {
+    const productUpd = await this.providerRepository.preload({
+      providerId: id,
+      ...updateProviderDto
+    })
+    return this.providerRepository.save(productUpd);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} provider`;
+  remove(id: string) {
+    this.providerRepository.delete({
+      providerId: id
+    });
+    return `Privider with id: ${id} has been deleted`;
   }
 }

@@ -31,11 +31,11 @@ export class ProductsService {
   }
 
   findByProvider(id: string) {
-    // const productsFound = this.products.filter((product) => product.provider === id);
-
-    // if (productsFound.length === 0) throw new NotFoundException('Provider not found');
-
-    // return productsFound;
+   return this.productRepository.findBy({
+      provider:{
+        providerId: id
+      }
+   })
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
