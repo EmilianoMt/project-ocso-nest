@@ -11,7 +11,7 @@ export class CreateLocationDto  extends Location{
     @MaxLength(160)
     locationAddress: string;
 
-    @IsArray()
+    @IsArray({each: true})
     @ArrayNotEmpty()
     locationLatLng: number[];
 }
