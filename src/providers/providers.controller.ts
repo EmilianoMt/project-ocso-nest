@@ -2,9 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, U
 import { ProvidersService } from './providers.service';
 import { CreateProviderDto } from './dto/create-provider.dto';
 import { UpdateProviderDto } from './dto/update-provider.dto';
-import { AuthGuard } from 'src/auth/guards/auth.guards';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { userData } from 'src/auth/decoratos/user.decorator';
 import { User } from 'src/auth/entities/user.entity';
+import { Roles } from 'src/auth/decoratos/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @UseGuards(AuthGuard)	
 @Controller('providers')
@@ -16,6 +18,8 @@ export class ProvidersController {
     return this.providersService.create(createProviderDto);
   }
 
+  @Roles(['Admin'])
+  @UseGuards(RolesGuard)
   @Get()
   findAll(@userData() user: User) {
     // console.log(user);
