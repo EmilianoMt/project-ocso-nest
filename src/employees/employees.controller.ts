@@ -26,13 +26,12 @@ export class EmployeesController {
       employeePhoneNumber: "123456789"
     }as Employee
   })
-
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeesService.create(createEmployeeDto);
   }
 
-  @Auth(ROLES.EMPLOYEE, ROLES.MANAGER)
+  @Auth(ROLES.EMPLOYEE, ROLES.MANAGER,)
   @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadPhoto(@UploadedFile()file: Express.Multer.File) {
