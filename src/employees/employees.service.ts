@@ -37,6 +37,14 @@ export class EmployeesService {
     return this.employeeRepository.find();
   }
 
+  findByLocations(id: number) {
+    return this.employeeRepository.findBy({
+      location: {
+        locationId: id
+      }
+    })
+  }
+
   async findOne(id: string) {
     const employee = await this.employeeRepository.findOneBy({id: id});
 

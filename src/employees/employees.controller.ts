@@ -35,6 +35,12 @@ export class EmployeesController {
     return this.employeesService.findOne(id);
   }
 
+  @Auth(ROLES.MANAGER)
+  @Get('/location/:id')
+  findAllLocations(@Param('id') id: string) {
+    return this.employeesService.findByLocations(+id);
+  }
+
   @Auth(ROLES.EMPLOYEE)
   @Patch('/:id')
   update(@Param('id', new ParseUUIDPipe({version:'4'})) id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
@@ -46,4 +52,5 @@ export class EmployeesController {
   remove(@Param('id', new ParseUUIDPipe({version:'4'})) id: string) {
     return this.employeesService.remove(id);
   }
+
 }

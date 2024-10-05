@@ -7,7 +7,7 @@ export class CreateRegionDto extends Region {
     @IsString()
     @MaxLength(100)
     regionName: string;
-
+ 
     @IsArray({each: true})
     regionStates: string[];
 }
