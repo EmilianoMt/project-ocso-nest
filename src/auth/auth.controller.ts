@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -15,8 +16,8 @@ export class AuthController {
   }
 
   @Post('login')
-  login(@Body() createUserDto: CreateUserDto) {
-    return this.authService.loginUser(createUserDto)
+  login(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.loginUser(loginUserDto)
   }
 
   @Patch("/:email")
