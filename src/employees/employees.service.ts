@@ -13,20 +13,6 @@ export class EmployeesService {
     private employeeRepository: Repository<Employee>,
   ) {}
 
-//   private employees: CreateEmployeeDto[] = [
-//   {
-//     id: uuid(),
-//     name: 'Alberto',
-//     lastName: 'Gonzalez',
-//     phoneNumber: '1234567890',
-//   },
-//   {
-//     id: uuid(),
-//     name: 'Juan',
-//     lastName: 'Perez',
-//     phoneNumber: '0987654321',
-//   }
-// ];
 
   create(createEmployeeDto: CreateEmployeeDto) {
     const employee = this.employeeRepository.save(createEmployeeDto);

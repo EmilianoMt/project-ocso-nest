@@ -13,6 +13,7 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
+  
   const config = new DocumentBuilder()
   .setTitle('Ocso API')
   .setDescription('API for Oxxo management') 

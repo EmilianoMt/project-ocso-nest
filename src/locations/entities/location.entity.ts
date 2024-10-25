@@ -37,7 +37,7 @@ export class Location {
     @JoinColumn({
         name: 'managerId',   
     })
-    manager: Manager;
+    manager: Manager | string;
 
     @ManyToOne(()=>Region, (region)=> region.locations)
     @JoinColumn({
