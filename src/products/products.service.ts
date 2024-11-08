@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Delete } from '@nestjs/common';
+import { Injectable, NotFoundException} from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { v4 as uuid } from 'uuid';
@@ -19,11 +19,22 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.productRepository.find();
+    return this.productRepository.find({
+      relations:{
+        provider: true
+      }
+    });
   }
 
    async findOne(id: string) {
-    const  product  = await this.productRepository.findOneBy({productId: id});    
+    const  product  = await this.productRepository.findOne({
+      where: {
+        productId: id
+      },
+      relations:{
+        provider: true
+      }
+    });    
 
     if (!product) throw new NotFoundException('Product not found');
 

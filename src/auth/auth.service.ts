@@ -21,7 +21,7 @@ export class AuthService {
     return this.userRepository.save(createUserDto);
   }
 
-  async loginUser(loginUserDto: LoginUserDto){
+  async loginUser(loginUserDto: LoginUserDto){    
     
     const user = await this.userRepository.findOne({
       where: {
