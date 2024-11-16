@@ -29,9 +29,9 @@ export class AuthController {
     @Body() createUserDto: CreateUserDto,
     @Param("id") id: string
   ) {
-    if(role === "Manager"){
+    if(role === "manager"){
       return this.authService.resgisterManager(id, createUserDto);
-    }else if(role === "Employee"){
+    }else if(role === "employee"){
       return this.authService.resgisterEmployee(id, createUserDto);
     }
       throw new BadGatewayException("Rol invalido");
@@ -52,11 +52,11 @@ export class AuthController {
     });
   }
 
-  @Patch("/:email")
+  @Patch("/:id")
   updateUser(
-    @Param("email") userEmail: string,
+    @Param("id") userId: string,
     @Body() updateUserDto: UpdateUserDto
   ) {
-    return this.authService.updateUser(userEmail, updateUserDto);
+    return this.authService.updateUser(userId, updateUserDto);
   }
 }

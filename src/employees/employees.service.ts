@@ -22,7 +22,8 @@ export class EmployeesService {
   findAll() {
     return this.employeeRepository.find({
       relations:{
-        location: true
+        location: true,
+        user: true
       }
     });
   }
@@ -41,7 +42,8 @@ export class EmployeesService {
         id: id 
       },
       relations:{
-        location: true
+        location: true,
+        user: true
       }
     }
   );

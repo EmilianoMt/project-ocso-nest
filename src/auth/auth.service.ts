@@ -33,7 +33,7 @@ export class AuthService {
       id: id,
     })
     employee.user = user;
-    this.employeeRepository.save(employee);
+    return this.employeeRepository.save(employee);
   }
 
   async resgisterManager(id:string, createUserDto: CreateUserDto) {
@@ -47,7 +47,7 @@ export class AuthService {
       managerId: id,
     })
     manager.user = user;
-    this.managerRepository.save(manager);
+    return this.managerRepository.save(manager);
   }
 
   async loginUser(loginUserDto: LoginUserDto){    
@@ -73,10 +73,10 @@ export class AuthService {
     return token;
   }
   
-  async updateUser(userEmail: string, updateUserDto: UpdateUserDto){
-    
+  async updateUser(id: string, updateUserDto: UpdateUserDto){
+    updateUserDto.userPassword = bcrypt.hashSync(updateUserDto.userPassword, 5);
     const newUserData = await this.userRepository.preload({
-      userEmail,
+      userId: id,
       ...updateUserDto
     })
     this.userRepository.save(newUserData);
