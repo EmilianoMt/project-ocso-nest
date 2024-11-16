@@ -6,6 +6,7 @@ import {
   Param,
   Res,
   BadGatewayException,
+  Query,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -21,24 +22,19 @@ import { Cookies } from "./decorators/cookies.decorator";
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post("/register/employee/[id]")
-  registerEmployee(@Body() createUserDto: CreateUserDto, @Param("id") id: string) {
-    if (
-      createUserDto.userRoles.includes("Admin") ||
-      createUserDto.userRoles.includes("Manager")
-    )
-      throw new BadGatewayException("Rol invalido");
-    return this.authService.resgisterEmployee(id, createUserDto);
-  }
 
-  @Post("/register/manger")
-  registerManager(@Body() createUserDto: CreateUserDto, @Param("id") id: string) {
-    if (
-      createUserDto.userRoles.includes("Admin") ||
-      createUserDto.userRoles.includes("Manager")
-    )
+  @Post("/register/:id")
+  registerManager(
+    @Query("role") role: string,
+    @Body() createUserDto: CreateUserDto,
+    @Param("id") id: string
+  ) {
+    if(role === "Manager"){
+      return this.authService.resgisterManager(id, createUserDto);
+    }else if(role === "Employee"){
+      return this.authService.resgisterEmployee(id, createUserDto);
+    }
       throw new BadGatewayException("Rol invalido");
-    return this.authService.resgisterManager(id, createUserDto);
   }
 
   @Post("login")
